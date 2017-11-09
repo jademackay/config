@@ -284,13 +284,15 @@ exec --no-startup-id clipit
 # exec --no-startup-id blueman
 # exec_always --no-startup-id sbxkb
 # exec --no-startup-id compton -b
-exec --no-startup-id start_conky_grey
+# exec --no-startup-id conky -c ~/.conky/basic
+# exec --no-startup-id start_conky_grey
 # exec --no-startup-id start_conky_green
+exec --no-startup-id start_conky_orange
 exec --no-startup-id xautolock -time 10 -locker ob_blurlock
 
 # Theme colors
 client.focused #FA8120 #FA8120 #000000 #FFFFFF
-client.unfocused #222222 #222222 #2ECC71 #222222
+client.unfocused #222222 #222222 #FA8120 #222222
 client.urgent #274D01 #900000 #FFFFFF #900000
 
 # client.focused #2ECC71 #2ECC71 #000000 #FFFFFF
@@ -376,9 +378,12 @@ bindsym $mod+m exec  i3-sensible-terminal -e alpine
 
 #exec --no-startup-id feh --randomize --bg-fill ~/Pictures/Wallpapers/*
 #exec feh --bg-fill /usr/share/backgrounds/gnome/adwaita-morning.jpg
-exec feh --bg-fill /usr/share/backgrounds/gnome/adwaita-day.jpg
+#exec feh --bg-fill /usr/share/backgrounds/gnome/adwaita-day.jpg
 #exec feh --bg-fill /usr/share/backgrounds/gnome/adwaita-lock.jpg
 #exec feh --bg-fill /usr/share/backgrounds/gnome/adwaita-night.jpg
+#exec feh --bg-fill /usr/share/backgrounds/gnome/Road.jpg
+#exec feh --bg-fill /usr/share/backgrounds/gnome/Godafoss_Iceland.jpg
+exec feh  --randomize --bg-center ~/.local/share/bg/*
 
 #exec --no-startup-id xinput set-prop "SynPS/2 Synaptics Touchpad" "Synaptics Tap Time" 150
 exec --no-startup-id xinput set-prop "SynPS/2 Synaptics TouchPad"  "Synaptics Tap Action" 0, 0, 0, 0, 1, 3, 2
