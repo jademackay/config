@@ -1,0 +1,5 @@
+# Config Setup
+
+* `make`
+* `zsh`
+* 
