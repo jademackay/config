@@ -72,7 +72,7 @@
   (setq my-hostname 
       (replace-regexp-in-string "\\(^[[:space:]\n]*\\|[[:space:]\n]*$\\)" "" ;; like perl chomp()
         (with-output-to-string 
-           (call-process "/bin/hostname" nil standard-output nil))))
+           (call-process "hostname" nil standard-output nil))))
     (setq my-username (getenv "USERNAME"))
    ;; (setq frame-title-format '("%b - " my-username "@" my-hostname))
     (setq frame-title-format '("%b - " my-hostname))
@@ -86,94 +86,101 @@
 (require 'paren)
 (show-paren-mode 1)
 
-  ;; Custom theme
-  ;;
-(add-to-list 'load-path "/home/jade/.emacs.d/elisp")
+;; tangotango color theme
+(add-to-list 'custom-theme-load-path "~/.emacs.d/color-themes")
+(load-theme 'tangotango t)
 
-(require 'color-theme)
-(setq color-theme-load-all-themes nil)
 
-(require 'color-theme-tangotango)
+;;   ;; Custom theme
+;;   ;;
+;; ;;(add-to-list 'load-path "/home/jade/.emacs.d/elisp")
+;; ;;(add-to-list 'load-path "/home/jade/.emacs.d/themes")
+;; ;;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/") 
 
-;; select theme - first list element is for windowing system, second is for console/terminal
-;; Source : http://www.emacswiki.org/emacs/ColorTheme#toc9
-(setq color-theme-choices 
-      '(color-theme-tangotango color-theme-tangotango))
+;; ;;(require 'color-theme)
+;; ;;(setq color-theme-load-all-themes nil)
 
-;; default-start
-(funcall (lambda (cols)
-    	   (let ((color-theme-is-global nil))
-    	     (eval 
-    	      (append '(if (window-system))
-    		      (mapcar (lambda (x) (cons x nil)) 
-    			      cols)))))
-    	 color-theme-choices)
+;; (require 'color-theme-tangotango)
 
-;; test for each additional frame or console
-(require 'cl)
-(fset 'test-win-sys 
-      (funcall (lambda (cols)
-    		 (lexical-let ((cols cols))
-    		   (lambda (frame)
-    		     (let ((color-theme-is-global nil))
-		       ;; must be current for local ctheme
-		       (select-frame frame)
-		       ;; test winsystem
-		       (eval 
-			(append '(if (window-system frame)) 
-				(mapcar (lambda (x) (cons x nil)) 
-					cols)))))))
-    	       color-theme-choices ))
-;; hook on after-make-frame-functions
-(add-hook 'after-make-frame-functions 'test-win-sys)
+;; ;; select theme - first list element is for windowing system, second is for console/terminal
+;; ;; Source : http://www.emacswiki.org/emacs/ColorTheme#toc9
+;; (setq color-theme-choices 
+;;       '(color-theme-tangotango color-theme-tangotango))
 
-(color-theme-tangotango)
+;; ;; default-start
+;; (funcall (lambda (cols)
+;;     	   (let ((color-theme-is-global nil))
+;;     	     (eval 
+;;     	      (append '(if (window-system))
+;;     		      (mapcar (lambda (x) (cons x nil)) 
+;;     			      cols)))))
+;;     	 color-theme-choices)
+
+;; ;; test for each additional frame or console
+;; (require 'cl)
+;; (fset 'test-win-sys 
+;;       (funcall (lambda (cols)
+;;     		 (lexical-let ((cols cols))
+;;     		   (lambda (frame)
+;;     		     (let ((color-theme-is-global nil))
+;; 		       ;; must be current for local ctheme
+;; 		       (select-frame frame)
+;; 		       ;; test winsystem
+;; 		       (eval 
+;; 			(append '(if (window-system frame)) 
+;; 				(mapcar (lambda (x) (cons x nil)) 
+;; 					cols)))))))
+;;     	       color-theme-choices ))
+;; ;; hook on after-make-frame-functions
+;; (add-hook 'after-make-frame-functions 'test-win-sys)
+
+;; (color-theme-tangotango)
 
 ;; ;;
-g;; ;; Programming tools
+;; ;; Programming tools
 ;; ;;
 
-;; Load CEDET.
-;; See cedet/common/cedet.info for configuration details.
-;; IMPORTANT: Tou must place this *before* any CEDET component (including
-;; EIEIO) gets activated by another package (Gnus, auth-source, ...).
-(load-file "/home/jade/github/cedet/cedet-devel-load.el")
+;; ;; Load CEDET.
+;; ;; See cedet/common/cedet.info for configuration details.
+;; ;; IMPORTANT: Tou must place this *before* any CEDET component (including
+;; ;; EIEIO) gets activated by another package (Gnus, auth-source, ...).
+;; (load-file "/home/jade/github/cedet/cedet-devel-load.el")
 
-;; Add further minor-modes to be enabled by semantic-mode.
-;; See doc-string of `semantic-default-submodes' for other things
-;; you can use here.
-(add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode t)
-(add-to-list 'semantic-default-submodes 'global-semantic-idle-completions-mode t)
-(add-to-list 'semantic-default-submodes 'global-cedet-m3-minor-mode t)
+;; ;; Add further minor-modes to be enabled by semantic-mode.
+;; ;; See doc-string of `semantic-default-submodes' for other things
+;; ;; you can use here.
+;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode t)
+;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-completions-mode t)
+;; (add-to-list 'semantic-default-submodes 'global-cedet-m3-minor-mode t)
 
-;; Enable Semantic
-(semantic-mode 1)
+;; ;; Enable Semantic
+;; (semantic-mode 1)
 
-;; Enable EDE (Project Management) features
-(global-ede-mode 1)
+;; ;; Enable EDE (Project Management) features
+;; (global-ede-mode 1)
 
-;; ecb
-(setq stack-trace-on-error t)
-;;(add-to-list 'load-path "/home/jade/mrfox/github/ecb")
-(add-to-list 'load-path "/home/jade/github/ecb")
-;; To load ecb at startup:
-;;(require 'ecb)
-;; To load ecb first after starting it by ecb-activate:
-(require 'ecb-autoloads)
-(global-set-key (kbd "M-<up>") 'ecb-goto-window-directories)
-(global-set-key (kbd "M-<down>") 'ecb-goto-window-methods)
-(global-set-key (kbd "M-<right>") 'ecb-goto-window-edit1)
-(global-set-key (kbd "M-<left>") 'ecb-goto-window-sources)
-;;(global-set-key (kbd "M-<down>") 'ecb-goto-window-history)
+;; ;; ecb
+;; (setq stack-trace-on-error t)
+;; ;;(add-to-list 'load-path "/home/jade/mrfox/github/ecb")
+;; (add-to-list 'load-path "/home/jade/github/ecb")
+;; ;; To load ecb at startup:
+;; ;;(require 'ecb)
+;; ;; To load ecb first after starting it by ecb-activate:
+;; (require 'ecb-autoloads)
+;; (global-set-key (kbd "M-<up>") 'ecb-goto-window-directories)
+;; (global-set-key (kbd "M-<down>") 'ecb-goto-window-methods)
+;; (global-set-key (kbd "M-<right>") 'ecb-goto-window-edit1)
+;; (global-set-key (kbd "M-<left>") 'ecb-goto-window-sources)
+;; ;;(global-set-key (kbd "M-<down>") 'ecb-goto-window-history)
 
 ;; ;; ESS - julia support
 ;; (load "/home/jade/github/ESS/lisp/ess-site.el")
 ;; (setq inferior-julia-program-name "/usr/bin/julia")
 ;; (add-to-list 'ess-tracebug-search-path "/home/jade/.julia") ;; or should this e the source?
 
-;; Not quite as nice:
-(add-to-list 'load-path "/home/jade/github/julia-emacs")
-(require 'julia-mode)
+;; ;; Not quite as nice:
+;; (add-to-list 'load-path "/home/jade/github/julia-emacs")
+;; (require 'julia-mode)
 
 
 
