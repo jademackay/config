@@ -1,4 +1,11 @@
 
+nixpkgs:
+	mkdir -p $(HOME)/.config/nixpkgs
+	cp nixpks/config.nix $(HOME)/.config/nixpkgs
+
+emacs-nixos:
+	mkdir -p $(HOME)/.config/nixpkgs
+	cp nixpkgs/emacs.nix
 
 i3status: ./i3status/config_goldchain
 	mkdir -p $(HOME)/.config/i3status
@@ -22,4 +29,7 @@ emacs-theme:
 	#cd .. && git clone https://github.com/emacsmirror/tangotango-theme.git
 	mkdir $(HOME)/.emacs.d/color-themes
 	cp ../tangotango-theme/tangotango-theme.el $(HOME)/.emacs.d/color-themes/
+
+receive-nixos:
+	cp /etc/nixos/configuration.nix nixos/configuration.nix
 

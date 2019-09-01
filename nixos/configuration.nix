@@ -1,0 +1,290 @@
+# Edit this configuration file to define what should be installed on
+# your system.  Help is available in the configuration.nix(5) man page
+# and in the NixOS manual (accessible by running ‘nixos-help’).
+
+{ config, pkgs, ... }:
+
+{
+  imports =
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+    ];
+
+  # Use the systemd-boot EFI boot loader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  networking.hostName = "goldchain"; # Define your hostname.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.networkmanager.enable = true; # NetworkManager
+
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+  # Select internationalisation properties.
+  i18n = {
+    consoleFont = "Lat2-Terminus16";
+    consoleKeyMap = "us";
+    defaultLocale = "en_US.UTF-8";
+  };
+  
+  # Set your time zone.
+  time.timeZone = "Pacific/Auckland";
+
+  # Propriery software
+  nixpkgs.config.allowUnfree = true; 
+
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  # or
+  # nix-env -qaP | grep wget
+  environment.systemPackages = with pkgs; [
+    # sys
+    wget
+    curl
+    pciutils
+    arandr
+    zsh
+    oh-my-zsh
+    #lxqt.lxqt-sudo
+    rxvt_unicode-with-plugins
+
+    # email
+    # protonmail-bridge
+    # mutt
+    # alpine
+    
+    # dev
+    vim
+    emacs
+    git
+    tmux
+    docker
+    docker-compose
+
+    go
+    gnumake
+
+    # desktop
+    lxappearance
+    i3-gaps
+    rofi
+    feh
+
+    #
+    restic
+
+    # apps
+    zathura
+    
+  ];
+
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  programs.mtr.enable = true;
+  programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
+
+  # programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
+  programs.zsh = {	   
+    enable = true;
+    shellAliases = {
+    e = "emacs -nw";
+    };
+    enableCompletion = true;
+    autosuggestions.enable = true;
+    interactiveShellInit = ''
+    # z - jump around
+    # source ${pkgs.fetchurl {url = "https://github.com/rupa/z/raw/2ebe419ae18316c5597dd5fb84b5d8595ff1dde9/z.sh"; sha256 = "0ywpgk3ksjq7g30bqbhl9znz3jh6jfg8lxnbdbaiipzgsy41vi10";}}
+    export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh
+    export ZSH_THEME="lambda"
+    plugins=(git)
+    source $ZSH/oh-my-zsh.sh
+    '';
+    promptInit = "";
+  };
+										
+
+
+
+  # List services that you want to enable:
+
+  # Enable the OpenSSH daemon.
+  services.openssh.enable = true;
+
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
+
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
+
+  # Enable sound.
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
+
+  # Enable the X11 windowing system.
+  # services.xserver.enable = true;
+  # services.xserver.layout = "us";
+  # services.xserver.xkbOptions = "eurosign:e";
+
+  # Enable touchpad support.
+  # services.xserver.libinput.enable = true;
+
+  # Enable the KDE Desktop Environment.
+  # services.xserver.displayManager.sddm.enable = true;
+  # services.xserver.desktopManager.plasma5.enable = true;
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.jade = {
+    isNormalUser = true;
+    shell = pkgs.zsh;
+    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
+  };
+
+  # This value determines the NixOS release with which your system is to be
+  # compatible, in order to avoid breaking some software such as database
+  # servers. You should change this only after NixOS release notes say you
+  # should.
+  system.stateVersion = "19.03"; # Did you read the comment?
+
+
+
+  fonts = {
+    enableFontDir = true;
+    enableGhostscriptFonts = true;
+    fonts = with pkgs; [
+      anonymousPro
+      corefonts
+      dejavu_fonts
+      noto-fonts
+      freefont_ttf
+      google-fonts
+      inconsolata
+      liberation_ttf
+      powerline-fonts
+      source-code-pro
+      terminus_font
+      ttf_bitstream_vera
+      ubuntu_font_family
+    ];
+  };
+
+  ## systemd
+  systemd.user.services."urxvtd" = {
+    enable = true;
+    description = "rxvt unicode daemon";
+    wantedBy = [ "default.target" ];
+    path = [ pkgs.rxvt_unicode ];
+    serviceConfig.Restart = "always";
+    serviceConfig.RestartSec = 2;
+    serviceConfig.ExecStart = "${pkgs.rxvt_unicode}/bin/urxvtd -q -o";
+  };
+
+
+  # hardware.opengl.driSupport32Bit = true; # might be useful for gpu?
+  # xserver
+  environment.pathsToLink = ["/libexec"];
+  services.xserver = {
+    enable = true;
+
+    # Enable Nvidia
+    videoDrivers = [ "nvidia" ];
+
+    desktopManager = {
+      default = "none";
+      xterm.enable = false;
+    };
+
+    # windowManager.gnome.enable = false;
+    windowManager.i3 = {
+      enable = true;
+      package = pkgs.i3-gaps;
+      extraPackages = with pkgs; [
+        dmenu
+	i3status
+	i3lock
+	i3blocks
+      ];
+   };
+   displayManager.sessionCommands =  ''
+      xrdb "${pkgs.writeText  "xrdb.conf" ''
+         URxvt.font:                 xft:Dejavu Sans Mono for Powerline:size=11
+         XTerm*faceName:             xft:Dejavu Sans Mono for Powerline:size=11
+         XTerm*utf8:                 2
+         URxvt.iconFile:             /usr/share/icons/elementary/apps/24/terminal.svg
+         URxvt.letterSpace:          0
+         URxvt.background:           #121214
+         URxvt.foreground:           #FFFFFF
+         XTerm*background:           #121212
+         XTerm*foreground:           #FFFFFF
+         ! black
+         URxvt.color0  :             #2E3436
+         URxvt.color8  :             #555753
+         XTerm*color0  :             #2E3436
+         XTerm*color8  :             #555753
+         ! red
+         URxvt.color1  :             #CC0000
+         URxvt.color9  :             #EF2929
+         XTerm*color1  :             #CC0000
+         XTerm*color9  :             #EF2929
+         ! green
+         URxvt.color2  :             #4E9A06
+         URxvt.color10 :             #8AE234
+         XTerm*color2  :             #4E9A06
+         XTerm*color10 :             #8AE234
+         ! yellow
+         URxvt.color3  :             #C4A000
+         URxvt.color11 :             #FCE94F
+         XTerm*color3  :             #C4A000
+         XTerm*color11 :             #FCE94F
+         ! blue
+         URxvt.color4  :             #3465A4
+         URxvt.color12 :             #729FCF
+         XTerm*color4  :             #3465A4
+         XTerm*color12 :             #729FCF
+         ! magenta
+         URxvt.color5  :             #75507B
+         URxvt.color13 :             #AD7FA8
+         XTerm*color5  :             #75507B
+         XTerm*color13 :             #AD7FA8
+         ! cyan
+         URxvt.color6  :             #06989A
+         URxvt.color14 :             #34E2E2
+         XTerm*color6  :             #06989A
+         XTerm*color14 :             #34E2E2
+         ! white
+         URxvt.color7  :             #D3D7CF
+         URxvt.color15 :             #EEEEEC
+         XTerm*color7  :             #D3D7CF
+         XTerm*color15 :             #EEEEEC
+         URxvt*saveLines:            32767
+         XTerm*saveLines:            32767
+         URxvt.colorUL:              #AED210
+         URxvt.perl-ext:             default,url-select
+         URxvt.keysym.M-u:           perl:url-select:select_next
+         URxvt.url-select.launcher:  /usr/bin/firefox -new-tab
+         URxvt.url-select.underline: true
+         Xft*dpi:                    96
+         Xft*antialias:              true
+         Xft*hinting:                full
+         URxvt.scrollBar:            false
+         URxvt*scrollTtyKeypress:    true
+         URxvt*scrollTtyOutput:      false
+         URxvt*scrollWithBuffer:     false
+         URxvt*scrollstyle:          plain
+         URxvt*secondaryScroll:      true
+         Xft.autohint: 0
+         Xft.lcdfilter:  lcddefault
+         Xft.hintstyle:  hintfull
+         Xft.hinting: 1
+         Xft.antialias: 1 
+      ''}"
+   '';
+};
+
+ programs.dconf.enable = true;
+ services.dbus.packages = [ pkgs.gnome3.dconf ];
+}
