@@ -137,6 +137,8 @@
   # services.xserver.displayManager.sddm.enable = true;
   # services.xserver.desktopManager.plasma5.enable = true;
 
+  environment.variables.EDITOR = "emacs -nw";
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.jade = {
     isNormalUser = true;
