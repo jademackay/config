@@ -121,6 +121,9 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  # Enable docker
+  virtualisation.docker.enable = true;
+
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
@@ -143,7 +146,7 @@
   users.users.jade = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" "docker"]; # Enable ‘sudo’ for the user.
   };
 
   # This value determines the NixOS release with which your system is to be
