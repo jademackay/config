@@ -15,7 +15,7 @@
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(ecb-options-version "2.40")
- '(package-selected-packages (quote (markdown-mode)))
+ '(package-selected-packages (quote (julia-repl markdown-mode)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -230,6 +230,8 @@
 (add-to-list 'auto-mode-alist '("\\.\\(pl\\|pro\\|lgt\\)" . prolog-mode))
 (put 'upcase-region 'disabled nil)
 
+(add-to-list 'load-path "/home/jade/repos/julia-emacs")
+(require 'julia-mode)
 
 (defun modi/revert-all-file-buffers ()
   "Refresh all open file buffers without confirmation.
