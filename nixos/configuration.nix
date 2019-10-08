@@ -77,6 +77,8 @@
 
     # apps
     zathura
+    pgf3
+    tikzit
 
     # extra
     texlive.combined.scheme-full
