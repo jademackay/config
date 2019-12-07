@@ -255,3 +255,10 @@ will be killed."
             (kill-buffer buf)
             (message "Killed non-existing/unreadable file buffer: %s" filename))))))
   (message "Finished reverting buffers containing unmodified files."))
+
+(require 'nix-mode)
+(add-to-list 'auto-mode-alist '("\\.nix\\'" . nix-mode))
+
+;;(require 'emacs-lisp-mode)
+;;(add-to-list 'auto-mode-alist '("\\emacs\\'" . emacs-lisp-mode))
+
