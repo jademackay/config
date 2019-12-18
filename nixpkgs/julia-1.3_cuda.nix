@@ -23,10 +23,11 @@ pkgs.buildFHSUserEnv {
 		with pkgs;
 		[
 			juliatree
+      #zlib # for conda.exe
 			curl
 			qt4
 			coreutils
-			#ourpython
+			ourpython
       # Flux deps
       cudnn
       cudatoolkit # for nvcc
@@ -37,9 +38,10 @@ pkgs.buildFHSUserEnv {
 	);
   profile = ''
     export PATH=${juliatree}/julia/bin:$PATH
-    export PYTHONPATH=${ourpython}/lib/python3.7/site-packages
     export CUDA_ROOT=${pkgs.cudatoolkit}
+    export PYTHONPATH=${ourpython}/lib/python3.7/site-packages  
   '';     
+  #export PYTHON=${ourpython}/bin/python  
   runScript="julia";
 }
   
