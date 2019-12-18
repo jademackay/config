@@ -34,6 +34,7 @@ emacs-setup: emacs-config emacs-theme
 	mkdir -p $(HOME)/emacs_backups
 	touch $(HOME)/.emacs
         #emacs -e "(progn (package-initialize)(package-install 'color-theme))"
+	#emacs -e "(progn (package-initialize)(package-install 'nix-mode))"	
 
 
 

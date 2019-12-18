@@ -41,6 +41,7 @@
   # nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     # sys
+    zlib
     wget
     curl
     pciutils
@@ -62,7 +63,10 @@
     tmux
     docker
     docker-compose
-
+    #julia
+    #    julia_12
+    #julia_13
+    
     go
     gnumake
 
@@ -71,6 +75,7 @@
     i3-gaps
     rofi
     feh
+    networkmanagerapplet
 
     #
     restic
