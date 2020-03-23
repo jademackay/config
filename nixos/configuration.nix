@@ -76,6 +76,7 @@
     rofi
     feh
     networkmanagerapplet
+    xfce.thunar
 
     #
     restic
@@ -122,6 +123,9 @@
 
   # List services that you want to enable:
 
+  # Enable locate
+  services.locate.enable = true;
+
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
@@ -152,7 +156,7 @@
   # Enable the KDE Desktop Environment.
   # services.xserver.displayManager.sddm.enable = true;
   # services.xserver.desktopManager.plasma5.enable = true;
-
+  
   environment.variables.EDITOR = "emacs -nw";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -214,6 +218,8 @@
     desktopManager = {
       default = "none";
       xterm.enable = false;
+      xfce.enable = true;
+
     };
 
     # windowManager.gnome.enable = false;
