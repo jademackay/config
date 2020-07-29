@@ -50,6 +50,7 @@
     oh-my-zsh
     #lxqt.lxqt-sudo
     rxvt_unicode-with-plugins
+    #volumeicon
 
     # email
     # protonmail-bridge
