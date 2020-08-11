@@ -39,6 +39,7 @@ pkgs.buildFHSUserEnv {
       # MLJ deps
       gcc
       binutils-unwrapped
+      graphviz # for ForneyLab viz
 		]
 	);
   profile = ''
