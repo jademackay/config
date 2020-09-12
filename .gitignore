@@ -1,0 +1,7 @@
+julia.nix
+nixpkgs/julia-1.2.nix
+nixpkgs/julia-1.3.nix
+nixpkgs/julia-1.3.nix.1
+nixpkgs/julia-1.3_cuda.nix.1
+nixpkgs/julia-bindeps.nix
+						
