@@ -50,7 +50,6 @@
     oh-my-zsh
     #lxqt.lxqt-sudo
     rxvt_unicode-with-plugins
-    #volumeicon
 
     # email
     # protonmail-bridge
@@ -160,20 +159,37 @@
   
   environment.variables.EDITOR = "emacs -nw";
 
+  # # audio jack
+  #  services.jack = {
+  #   jackd.enable = true;
+  #   # support ALSA only programs via ALSA JACK PCM plugin
+  #   alsa.enable = false;
+  #   # support ALSA only programs via loopback device (supports programs like Steam)
+  #   loopback = {
+  #     enable = true;
+  #     # buffering parameters for dmix device to work with ALSA only semi-professional sound programs
+  #     #dmixConfig = ''
+  #     #  period_size 2048
+  #     #'';
+  #   };
+  # };
+
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.jade = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" "networkmanager" "docker"]; # Enable ‘sudo’ for the user.
+    # extraGroups = [ "wheel" "networkmanager" "docker" "audio" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" "docker" "audio" "jackaudio" ]; # Enable ‘sudo’ for the user.
   };
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
   # should.
-  system.stateVersion = "19.03"; # Did you read the comment?
+  system.stateVersion = "20.03"; # Did you read the comment?
   system.autoUpgrade.enable = true;
-
+  system.autoUpgrade.allowReboot = true;
 
   fonts = {
     enableFontDir = true;
@@ -217,12 +233,16 @@
     videoDrivers = [ "nvidia" ];
 
     desktopManager = {
-      default = "none";
+      #default = "none";
       xterm.enable = false;
       xfce.enable = true;
 
     };
-
+    
+    displayManager = {
+            defaultSession = "none+i3";
+    };
+		
     # windowManager.gnome.enable = false;
     windowManager.i3 = {
       enable = true;
