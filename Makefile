@@ -1,7 +1,7 @@
 
 nixpkgs:
 	mkdir -p $(HOME)/.config/nixpkgs
-	cp nixpks/config.nix $(HOME)/.config/nixpkgs
+	cp nixpkgs/config.nix $(HOME)/.config/nixpkgs
 
 nixos-receive:
 	cp /etc/nixos/configuration.nix nixos/configuration.nix
