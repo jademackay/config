@@ -5,6 +5,7 @@ nixpkgs:
 
 nixos-receive:
 	cp /etc/nixos/configuration.nix nixos/configuration.nix
+	cp /etc/nixos/hardware-configuration.nix nixos/hardware-configuration.nix
 
 emacs-nixos:
 	mkdir -p $(HOME)/.config/nixpkgs
