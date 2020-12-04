@@ -48,8 +48,10 @@ pkgs.buildFHSUserEnv {
       ipopt
       # TikzPictures.jl:
       texlive.combined.scheme-full # full bc already installed
-      # Conda.jl: (still faililing)
+      # Conda.jl: (still failing)
       zlib
+      conda
+      adoptopenjdk-jre-bin
 		]
 	);
   profile = ''
@@ -59,6 +61,7 @@ pkgs.buildFHSUserEnv {
     export LIBRARY_PATH=${pkgs.gcc}:$LIBRARY_PATH 
     export LIBRARY_PATH=${pkgs.ipopt}:$LIBRARY_PATH
     export LIBRARY_PATH=${pkgs.zlib}:$LIBRARY_PATH
+    export LD_LIBRARY_PATH=${pkgs.zlib}:$LD_LIBRARY_PATH
     export PATH=${pkgs.binutils-unwrapped}/bin:$PATH
     export JULIA_CMDSTAN_HOME=${pkgs.cmdstan}/opt/cmdstan
   '';     
