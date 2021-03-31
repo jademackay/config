@@ -1,0 +1,1 @@
+alias tmux-update-display='export DISPLAY="`tmux show-env | sed -n 's/^DISPLAY=//p'`" '
