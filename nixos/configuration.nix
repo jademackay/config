@@ -147,6 +147,9 @@
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
+  # Enable bluetooth suppoort
+  hardware.bluetooth.enable = true;
+
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
   # services.xserver.layout = "us";
@@ -185,6 +188,10 @@
     extraGroups = [ "wheel" "networkmanager" "docker" "audio" "jackaudio" ]; # Enable ‘sudo’ for the user.
   };
 
+  # Enable bluetooth applet/manager
+  services.blueman.enable = true;
+
+
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
@@ -194,7 +201,8 @@
   system.autoUpgrade.allowReboot = true;
 
   fonts = {
-    enableFontDir = true;
+    fontDir.enable = true;
+    # deprecatedenableFontDir = true;
     enableGhostscriptFonts = true;
     fonts = with pkgs; [
       anonymousPro

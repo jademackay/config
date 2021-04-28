@@ -31,4 +31,12 @@ nix-env -u
 ```
 
 
+Clean up boot:
+```
+nix-env -p /nix/var/nix/profiles/system --delete-generations +4
+nixos-rebuild switch 
+```
+
+
+
 ## Julia
