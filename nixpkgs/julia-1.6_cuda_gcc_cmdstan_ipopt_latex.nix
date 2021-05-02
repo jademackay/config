@@ -18,7 +18,8 @@ let
 		fixupPhase = ''
 					    '' ;
   };
-  ourpython=(pkgs.python37.withPackages (ps: [ps.matplotlib ps.gym]));
+  # ourpython=(pkgs.python37.withPackages (ps: [ps.matplotlib ps.gym]));
+  ourpython=(pkgs.python37.withPackages (ps: [ps.matplotlib]));
 in
 pkgs.buildFHSUserEnv {
   name = "julia";
@@ -59,6 +60,7 @@ pkgs.buildFHSUserEnv {
     export PATH=${juliatree}/julia/bin:$PATH
     export CUDA_ROOT=${pkgs.cudatoolkit}
     export PYTHONPATH=${ourpython}/lib/python3.7/site-packages  
+    export PYTHON=${ourpython}/bin/python
     export LIBRARY_PATH=${pkgs.gcc}:$LIBRARY_PATH 
     export LIBRARY_PATH=${pkgs.ipopt}:$LIBRARY_PATH
     export LIBRARY_PATH=${pkgs.zlib}:$LIBRARY_PATH
