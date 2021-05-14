@@ -2,28 +2,37 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-;;(package-initialize)
+
 (require 'package)
-(add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
+;; and `package-pinned-packages`. Most users will not need or want to do this.
+;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(column-number-mode t)
- '(ecb-options-version "2.40")
- '(package-selected-packages (quote (julia-repl markdown-mode)))
- '(show-paren-mode t)
- '(tool-bar-mode nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:family "Inconsolata for Powerline" :foundry "PfEd" :slant normal :weight normal :height 128 :width normal)))))
+;;(mapc 'package-install ("julia-mode" "nix-mode"))
+;; (mapc 'package-install '(nix-mode))
+(package-install 'nix-mode)
+(package-install 'julia-mode)
+
+
+;;-- delete this block?
+;; (custom-set-variables
+;;  ;; custom-set-variables was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  '(column-number-mode t)
+;;  '(ecb-options-version "2.40")
+;;  '(package-selected-packages (quote (julia-repl markdown-mode)))
+;;  '(show-paren-mode t)
+;;  '(tool-bar-mode nil))
+;; (custom-set-faces
+;;  ;; custom-set-faces was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  '(default ((t (:family "Inconsolata for Powerline" :foundry "PfEd" :slant normal :weight normal :height 128 :width normal)))))
 
 
 ;;-- Additions
@@ -31,14 +40,13 @@
 ;; Integrate with gnome clipboard (for copy and paste)
 (setq x-select-enable-clipboard t) 
 
-;; org-mode
+;;-- org-mode
 ;; The following lines are always needed.  Choose your own keys.
-;;(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-;;(add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
-;;(global-set-key "\C-cl" 'org-store-link)
-;;(global-set-key "\C-ca" 'org-agenda)
-;;(global-set-key "\C-cb" 'org-iswitchb)
-
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+(add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
                                                                                 
 ;;-- Place Backup Files in Specific Directory 
 ;; Enable backup files.                                                         
@@ -51,7 +59,7 @@
 (setq delete-old-versions t)  
 
 
-;; DISABLE TOOLBAR
+;;-- DISABLE TOOLBAR
 ;; With numeric ARG, display the tool bar if and only if ARG is
 ;; positive.  Tool bar has icons document (read file), folder (read
 ;; directory), X (discard buffer), disk (save), disk+pen (save-as),
@@ -95,122 +103,13 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/color-themes")
 (load-theme 'tangotango t)
 
-
-;;   ;; Custom theme
-;;   ;;
-;; ;;(add-to-list 'load-path "/home/jade/.emacs.d/elisp")
-;; ;;(add-to-list 'load-path "/home/jade/.emacs.d/themes")
-;; ;;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/") 
-
-;; ;;(require 'color-theme)
-;; ;;(setq color-theme-load-all-themes nil)
-
-;; (require 'color-theme-tangotango)
-
-;; ;; select theme - first list element is for windowing system, second is for console/terminal
-;; ;; Source : http://www.emacswiki.org/emacs/ColorTheme#toc9
-;; (setq color-theme-choices 
-;;       '(color-theme-tangotango color-theme-tangotango))
-
-;; ;; default-start
-;; (funcall (lambda (cols)
-;;     	   (let ((color-theme-is-global nil))
-;;     	     (eval 
-;;     	      (append '(if (window-system))
-;;     		      (mapcar (lambda (x) (cons x nil)) 
-;;     			      cols)))))
-;;     	 color-theme-choices)
-
-;; ;; test for each additional frame or console
-;; (require 'cl)
-;; (fset 'test-win-sys 
-;;       (funcall (lambda (cols)
-;;     		 (lexical-let ((cols cols))
-;;     		   (lambda (frame)
-;;     		     (let ((color-theme-is-global nil))
-;; 		       ;; must be current for local ctheme
-;; 		       (select-frame frame)
-;; 		       ;; test winsystem
-;; 		       (eval 
-;; 			(append '(if (window-system frame)) 
-;; 				(mapcar (lambda (x) (cons x nil)) 
-;; 					cols)))))))
-;;     	       color-theme-choices ))
-;; ;; hook on after-make-frame-functions
-;; (add-hook 'after-make-frame-functions 'test-win-sys)
-
-;; (color-theme-tangotango)
-
-;; ;;
-;; ;; Programming tools
-;; ;;
-
-;; ;; Load CEDET.
-;; ;; See cedet/common/cedet.info for configuration details.
-;; ;; IMPORTANT: Tou must place this *before* any CEDET component (including
-;; ;; EIEIO) gets activated by another package (Gnus, auth-source, ...).
-;; (load-file "/home/jade/github/cedet/cedet-devel-load.el")
-
-;; ;; Add further minor-modes to be enabled by semantic-mode.
-;; ;; See doc-string of `semantic-default-submodes' for other things
-;; ;; you can use here.
-;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode t)
-;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-completions-mode t)
-;; (add-to-list 'semantic-default-submodes 'global-cedet-m3-minor-mode t)
-
-;; ;; Enable Semantic
-;; (semantic-mode 1)
-
-;; ;; Enable EDE (Project Management) features
-;; (global-ede-mode 1)
-
-;; ;; ecb
-;; (setq stack-trace-on-error t)
-;; ;;(add-to-list 'load-path "/home/jade/mrfox/github/ecb")
-;; (add-to-list 'load-path "/home/jade/github/ecb")
-;; ;; To load ecb at startup:
-;; ;;(require 'ecb)
-;; ;; To load ecb first after starting it by ecb-activate:
-;; (require 'ecb-autoloads)
-;; (global-set-key (kbd "M-<up>") 'ecb-goto-window-directories)
-;; (global-set-key (kbd "M-<down>") 'ecb-goto-window-methods)
-;; (global-set-key (kbd "M-<right>") 'ecb-goto-window-edit1)
-;; (global-set-key (kbd "M-<left>") 'ecb-goto-window-sources)
-;; ;;(global-set-key (kbd "M-<down>") 'ecb-goto-window-history)
-
-;; ;; ESS - julia support
-;; (load "/home/jade/github/ESS/lisp/ess-site.el")
-;; (setq inferior-julia-program-name "/usr/bin/julia")
-;; (add-to-list 'ess-tracebug-search-path "/home/jade/.julia") ;; or should this e the source?
-
-;; ;; Not quite as nice:
-;; (add-to-list 'load-path "/home/jade/github/julia-emacs")
-;; (require 'julia-mode)
-
-
-
 ;;(add-to-list 'load-path "~/.emacs.d")    ; This may not be appeared if you have already added.
 (add-to-list 'load-path "~/.emacs.d/auto-complete")
-
-;; ;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict/auto-complete")
-;; ;; (require 'auto-complete-config)
-;; ;; (ac-config-default)
-
-;; (add-to-list 'load-path "/usr/share/emacs/site-lisp/auto-complete")                                           
-;; (require 'auto-complete-config)                                                                               
-;; (add-to-list 'ac-dictionary-directories "/usr/share/emacs/site-lisp/auto-complete/dict")                      
-;; (ac-config-default)            
-
 
 ;; smlnj
 ;;(setenv "PATH" (concat "/usr/lib/smlnj/bin:" (getenv "PATH")))
 ;;(setq exec-path (cons "/usr/lib/smlnj/bin"  exec-path))
 (put 'downcase-region 'disabled nil)
-
-
-
-;;(require 'tramp)
-(setq tramp-default-method "ssh")
 
 ;; markdown
 (autoload 'markdown-mode "markdown-mode" "Markdown mode" t)
@@ -230,10 +129,11 @@
 (add-to-list 'auto-mode-alist '("\\.\\(pl\\|pro\\|lgt\\)" . prolog-mode))
 (put 'upcase-region 'disabled nil)
 
-(add-to-list 'load-path "/home/jade/repos/julia-emacs")
+;; (add-to-list 'load-path "/home/jade/repos/julia-emacs")
 (require 'julia-mode)
 
-(defun modi/revert-all-file-buffers ()
+;;-- revert all files buffers
+(defun revert-all-file-buffers ()
   "Refresh all open file buffers without confirmation.
 Buffers in modified (not yet saved) state in emacs will not be reverted. They
 will be reverted though if they were modified outside emacs.
