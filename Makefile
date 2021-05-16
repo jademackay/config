@@ -34,11 +34,12 @@ emacs-config: ./emacs/emacs
 # 	mkdir $(HOME)/.emacs.d/color-themes
 # 	cp ../tangotango-theme/tangotango-theme.el $(HOME)/.emacs.d/color-themes/
 
-$(HOME)/.emacs.d/color-themes/tangotango-theme:
-	mkdir -p $(HOME)/.emacs.d/color-themes
-	git clone https://github.com/emacsmirror/tangotango-theme.git $(HOME)/.emacs.d/color-themes/tangotango-theme
+# $(HOME)/.emacs.d/color-themes/tangotango-theme:
+# 	mkdir -p $(HOME)/.emacs.d/color-themes
+# 	git clone https://github.com/emacsmirror/tangotango-theme.git $(HOME)/.emacs.d/color-themes/tangotango-theme
 
-emacs-setup: emacs-config $(HOME)/.emacs.d/color-themes/tangotango-theme
+#emacs-setup: emacs-config $(HOME)/.emacs.d/color-themes/tangotango-theme
+emacs-setup: emacs-config 
 	mkdir -p $(HOME)/emacs_backups
 	touch $(HOME)/.emacs
 #	emacs -e "(progn (package-initialize)(package-install 'color-theme))"

@@ -14,7 +14,7 @@
 ;; (mapc 'package-install '(nix-mode))
 (package-install 'nix-mode)
 (package-install 'julia-mode)
-
+(package-install 'tangotango-theme)
 
 ;;-- delete this block?
 ;; (custom-set-variables
@@ -47,7 +47,11 @@
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
-                                                                                
+(setq org-agenda-files (list "~/repos/org-mode/Diary.org"
+      "~/repos/org-mode/Home.org"
+      "~/repos/org-mode/Notes.org"
+      "~/repos/org-mode/TODO.org"))
+
 ;;-- Place Backup Files in Specific Directory 
 ;; Enable backup files.                                                         
 (setq make-backup-files t)                                                      
@@ -100,7 +104,7 @@
 (show-paren-mode 1)
 
 ;; tangotango color theme
-(add-to-list 'custom-theme-load-path "~/.emacs.d/color-themes")
+;;(add-to-list 'custom-theme-load-path "~/.emacs.d/color-themes")
 (load-theme 'tangotango t)
 
 ;;(add-to-list 'load-path "~/.emacs.d")    ; This may not be appeared if you have already added.
