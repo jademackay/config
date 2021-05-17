@@ -79,6 +79,7 @@
     feh
     networkmanagerapplet
     xfce.thunar
+    blueman
 
     #
     restic

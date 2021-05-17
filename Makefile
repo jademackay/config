@@ -7,6 +7,10 @@ nixos-receive:
 	cp /etc/nixos/configuration.nix nixos/configuration.nix
 	cp /etc/nixos/hardware-configuration.nix nixos/hardware-configuration.nix
 
+nixos-update:
+	sudo cp /etc/nixos/configuration.nix /etc/nixos/configuration.nix.`date -d "today" +"%Y%m%d%H%M"`
+	sudo cp nixos/configuration.nix /etc/nixos/configuration.nix
+
 emacs-nixos:
 	mkdir -p $(HOME)/.config/nixpkgs
 	cp nixpkgs/emacs.nix
