@@ -14,6 +14,7 @@
 ;; (mapc 'package-install '(nix-mode))
 (package-install 'nix-mode)
 (package-install 'julia-mode)
+(package-install 'markdown-mode)
 (package-install 'tangotango-theme)
 
 ;;-- delete this block?
