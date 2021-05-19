@@ -52,8 +52,10 @@ emacs-setup: emacs-config
 #emacs -e "(progn (package-initialize)(package-install 'packagename))"
 #(mapc 'package-install install-list)
 
-tmux-setup:
+tmux-plugins: ~/.tmux/plugins/tpm
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+tmux-setup: 
 	cp tmux/tmux.conf $(HOME)/.tmux.conf
 	tmux source ~/.tmux.conf
 
