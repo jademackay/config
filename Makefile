@@ -1,4 +1,9 @@
 
+install-nix:
+	curl -L https://nixos.org/nix/install | sh
+
+# TODO: install emacs and ispell with nix-env
+
 nixpkgs:
 	mkdir -p $(HOME)/.config/nixpkgs
 	cp nixpkgs/config.nix $(HOME)/.config/nixpkgs
@@ -52,7 +57,7 @@ emacs-setup: emacs-config
 #emacs -e "(progn (package-initialize)(package-install 'packagename))"
 #(mapc 'package-install install-list)
 
-tmux-plugins: ~/.tmux/plugins/tpm
+tmux-plugins: 
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 tmux-setup: 
