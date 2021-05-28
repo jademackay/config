@@ -1,0 +1,25 @@
+# ~/.xinitrc
+# ...
+
+if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+    for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
+	[ -x "$f" ] && . "$f"
+    done
+    unset f
+fi
+
+# twm &
+# xclock -geometry 50x50-1+1 &
+# xterm -geometry 80x50+494+51 &
+# xterm -geometry 80x20+494-0 &
+# exec xterm -geometry 80x66+0+0 -name login
+
+## some applications that should be run in the background
+xscreensaver &
+xsetroot -cursor_name left_ptr &
+
+#exec openbox-session
+exec i3
+#To log the output from i3, add this line instead:
+#exec i3 -V >> ~/i3log-$(date +'%F-%k-%M-%S') 2>&1
+#exec 13-gnome
