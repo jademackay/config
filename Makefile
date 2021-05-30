@@ -25,6 +25,7 @@ i3status: ./i3status/config_goldchain
 	cp ./i3status/config_goldchain $(HOME)/.config/i3status/config
 
 i3: ./i3/config  ./i3/i3exit
+	mkdir -p ~/.config/i3
         # ispath ? mv ~/.config/i3/config ~/.config/i3/config.bak
 	touch $(HOME)/.config/i3/config 
 	mv $(HOME)/.config/i3/config $(HOME)/.config/i3/config.bak.`date -d "today" +"%Y%m%d%H%M"`
