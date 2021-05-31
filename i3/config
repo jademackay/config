@@ -22,6 +22,7 @@ bindsym $mod+n border normal
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 font pango:Cantarell 9
+#font pango:Cantarell 12
 
 # Use Mouse+$mod to drag floating windows
 floating_modifier $mod
@@ -265,7 +266,9 @@ bar {
 		separator #FA8120
 		#separator #2ECC71
 		#background #DE0B68
-		background #650076
+#		background #650076
+		#background #OO64OO
+		background #b7410e 
 		statusline #DDDDDD
 		focused_workspace #FFFFFF #F0FF4E #000000
 		active_workspace #000000 #A4A28D #FFFFFF
@@ -275,6 +278,7 @@ bar {
 }
 
 # Autostart applications
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id nm-applet
@@ -383,8 +387,9 @@ bindsym $mod+m exec  i3-sensible-terminal -e alpine
 #exec feh --bg-fill /usr/share/backgrounds/gnome/adwaita-night.jpg
 #exec feh --bg-fill /usr/share/backgrounds/gnome/Road.jpg
 #exec feh --bg-fill /usr/share/backgrounds/gnome/Godafoss_Iceland.jpg
-exec feh  --randomize --bg-center ~/.local/share/bg/*
+#exec feh  --randomize --bg-center ~/.local/share/bg/*
+exec feh --bg-fill /home/mackj/repos/nixos-artwork/wallpapers/nix-wallpaper-simple-dark-gray_bottom.png
 
 #exec --no-startup-id xinput set-prop "SynPS/2 Synaptics Touchpad" "Synaptics Tap Time" 150
-exec --no-startup-id xinput set-prop "SynPS/2 Synaptics TouchPad"  "Synaptics Tap Action" 0, 0, 0, 0, 1, 3, 2
+#exec --no-startup-id xinput set-prop "SynPS/2 Synaptics TouchPad"  "Synaptics Tap Action" 0, 0, 0, 0, 1, 3, 2
 
