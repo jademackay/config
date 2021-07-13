@@ -37,6 +37,14 @@ nix-env -p /nix/var/nix/profiles/system --delete-generations +4
 nixos-rebuild switch 
 ```
 
+TODO
+```configuration.nix
+nix.autoOptimiseStore = true;
+```
+
+```
+nix-collect-garbage
+```
 
 
 ## Julia
