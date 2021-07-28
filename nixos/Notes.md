@@ -21,7 +21,7 @@ Upgrading
 ```
 nix-channel --update
 sudo nix-channel --update
-sudo nix-rebuild switch.
+sudo nix-rebuild switch
 sudo nix-rebuild switch --upgrade
 ```
 
