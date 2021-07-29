@@ -34,13 +34,23 @@
   # Set your time zone.
   time.timeZone = "Pacific/Auckland";
 
+  # This value determines the NixOS release with which your system is to be
+  # compatible, in order to avoid breaking some software such as database
+  # servers. You should change this only after NixOS release notes say you
+  # should.
+  #system.stateVersion = "20.03"; # Did you read the comment?
+  system.stateVersion = "21.05"; # Did you read the comment?
+  system.autoUpgrade.enable = true;
+  system.autoUpgrade.allowReboot = true;
+
   # Propriery software
   nixpkgs.config.allowUnfree = true; 
 
    nix = {
-       package = pkgs.nixUnstable;
+       #package = pkgs.nixUnstable;
+       package = pkgs.nixStable;
        extraOptions = ''
-       experimental-features = nix-command flakes
+       #experimental-features = nix-command flakes
        '';
    };
 
@@ -198,15 +208,6 @@
 
   # Enable bluetooth applet/manager
   services.blueman.enable = true;
-
-
-  # This value determines the NixOS release with which your system is to be
-  # compatible, in order to avoid breaking some software such as database
-  # servers. You should change this only after NixOS release notes say you
-  # should.
-  system.stateVersion = "20.03"; # Did you read the comment?
-  system.autoUpgrade.enable = true;
-  system.autoUpgrade.allowReboot = true;
 
   fonts = {
     fontDir.enable = true;
