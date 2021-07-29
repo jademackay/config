@@ -43,8 +43,10 @@ nix.autoOptimiseStore = true;
 ```
 
 ```
-nix-collect-garbage
+nix-collect-garbage -d
 ```
-
+```
+sudo nix-store --optimise
+```
 
 ## Julia
