@@ -2,7 +2,7 @@
 let
 	juliatree=pkgs.stdenv.mkDerivation {
 		name = "juliatree";
-    version = "1.5.0";
+    version = "1.6.2";
     src = pkgs.fetchzip {
       url="https://julialang-s3.julialang.org/bin/linux/x64/1.6/julia-1.6.2-linux-x86_64.tar.gz";
       sha256="sha256:0dhwllf8zjggfzd0h63pxpcp1dwiq4i8i3fiasz61sfvmkyshh83";
@@ -17,7 +17,7 @@ let
 					    '' ;
   };
   # ourpython=(pkgs.python37.withPackages (ps: [ps.matplotlib ps.gym]));
-  ourpython=(pkgs.python37.withPackages (ps: [ps.matplotlib]));
+  ourpython=(pkgs.python38.withPackages (ps: [ps.matplotlib]));
 in
 pkgs.buildFHSUserEnv {
   name = "julia";
