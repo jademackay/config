@@ -16,7 +16,6 @@ let
 		fixupPhase = ''
 					    '' ;
   };
-  # ourpython=(pkgs.python37.withPackages (ps: [ps.matplotlib ps.gym]));
   ourpython=(pkgs.python38.withPackages (ps: [ps.matplotlib]));
 in
 pkgs.buildFHSUserEnv {
