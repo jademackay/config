@@ -2,9 +2,9 @@
 
 After modifying /etx/nix/configuration.nix:
 ```
-sudo nixos-rebuid test # change to it but don't boot next time
-sudo nixos-rebuid switch # switch & boot to it next time
-sudo nixos-rebuid boot # don't switch but boot to it next time
+sudo nixos-rebuild test # change to it but don't boot next time
+sudo nixos-rebuild switch # switch & boot to it next time
+sudo nixos-rebuild boot # don't switch but boot to it next time
 ```
 Also useful 
 ```

@@ -51,6 +51,7 @@
        package = pkgs.nixStable;
        extraOptions = ''
        #experimental-features = nix-command flakes
+       #autoOptimiseStore = true;  
        '';
    };
 
@@ -97,6 +98,7 @@
     networkmanagerapplet
     xfce.thunar
     blueman
+    firefox
 
     #
     restic
