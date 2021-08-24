@@ -86,7 +86,8 @@
     #julia
     #    julia_12
     #julia_13
-    
+    terraform
+
     go
     gnumake
 
