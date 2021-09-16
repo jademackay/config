@@ -16,7 +16,8 @@ let
 		fixupPhase = ''
 					    '' ;
   };
-  ourpython=(pkgs.python38.withPackages (ps: [ps.matplotlib]));
+  ourpython=(pkgs.python39.withPackages (ps: [ps.matplotlib]));
+  # ATTN: python version must conform with the export PYTHONPATH path in `profile` below
 in
 pkgs.buildFHSUserEnv {
   name = "julia";
@@ -56,7 +57,7 @@ pkgs.buildFHSUserEnv {
   profile = ''
     export PATH=${juliatree}/julia/bin:$PATH
     export CUDA_ROOT=${pkgs.cudatoolkit}
-    export PYTHONPATH=${ourpython}/lib/python3.7/site-packages  
+    export PYTHONPATH=${ourpython}/lib/python3.9/site-packages  
     export PYTHON=${ourpython}/bin/python
     export LIBRARY_PATH=${pkgs.gcc}:$LIBRARY_PATH 
     export LIBRARY_PATH=${pkgs.ipopt}:$LIBRARY_PATH
