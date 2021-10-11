@@ -87,6 +87,7 @@
     #    julia_12
     #julia_13
     terraform
+    python39Packages.flake8
 
     go
     gnumake
