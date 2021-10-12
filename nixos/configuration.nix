@@ -40,8 +40,10 @@
   # should.
   #system.stateVersion = "20.03"; # Did you read the comment?
   system.stateVersion = "21.05"; # Did you read the comment?
-  system.autoUpgrade.enable = true;
-  system.autoUpgrade.allowReboot = true;
+  # system.autoUpgrade.enable = true;
+  # system.autoUpgrade.allowReboot = true;
+  system.autoUpgrade.enable = false;
+  system.autoUpgrade.allowReboot = false;
 
   # Propriery software
   nixpkgs.config.allowUnfree = true; 
