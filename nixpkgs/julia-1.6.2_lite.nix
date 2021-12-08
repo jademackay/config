@@ -27,6 +27,7 @@ pkgs.buildFHSUserEnv {
 			juliatree
 			curl
 			qt4
+      gtk4
 			coreutils
 			ourpython
       gcc
@@ -43,6 +44,7 @@ pkgs.buildFHSUserEnv {
       adoptopenjdk-jre-bin
       libxml2
       git
+      docker
 		]
 	);
   profile = ''

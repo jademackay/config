@@ -81,6 +81,7 @@
     # dev
     vim
     emacs
+    ispell
     git
     tmux
     docker
@@ -94,6 +95,11 @@
     go
     gnumake
 
+    # aws
+    awscli2
+    ssm-session-manager-plugin
+    aws-vault
+
     # desktop
     lxappearance
     i3-gaps
@@ -103,6 +109,12 @@
     xfce.thunar
     blueman
     firefox
+    ispell
+    volumeicon
+    tree
+    killall
+    xorg.xkill
+    ranger
 
     #
     restic
@@ -116,7 +128,7 @@
 
     # extra
     texlive.combined.scheme-full
-    postgresql	
+    postgresql
 
   ];
 
