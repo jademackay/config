@@ -41,6 +41,8 @@ pkgs.buildFHSUserEnv {
       zlib
       conda
       adoptopenjdk-jre-bin
+      libxml2
+      git
 		]
 	);
   profile = ''
