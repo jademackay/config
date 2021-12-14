@@ -66,12 +66,14 @@
     zlib
     wget
     curl
+    htop
     pciutils
     arandr
     zsh
     oh-my-zsh
     #lxqt.lxqt-sudo
     rxvt_unicode-with-plugins
+    gtk4
 
     # email
     # protonmail-bridge
@@ -363,6 +365,10 @@
          Xft.hintstyle:  hintfull
          Xft.hinting: 1
          Xft.antialias: 1 
+	 URxvt.keysym.Control-Up:     \033[1;5A
+	 URxvt.keysym.Control-Down:   \033[1;5B
+	 URxvt.keysym.Control-Left:   \033[1;5D
+	 URxvt.keysym.Control-Right:  \033[1;5C
       ''}"
    '';
 };
