@@ -27,7 +27,16 @@ pkgs.buildFHSUserEnv {
 			juliatree
 			curl
 			qt4
+      #gtk3
       gtk4
+      #gtk2
+      font-manager
+      cairo
+      #gdk-pixbuf
+      gdk-pixbuf-xlib
+      libadwaita
+      fontconfig
+      #gtk2
 			coreutils
 			ourpython
       gcc
@@ -57,7 +66,9 @@ pkgs.buildFHSUserEnv {
     export LD_LIBRARY_PATH=${pkgs.zlib}:$LD_LIBRARY_PATH
     export PATH=${pkgs.binutils-unwrapped}/bin:$PATH
     export JULIA_CMDSTAN_HOME=${pkgs.cmdstan}/opt/cmdstan
-  '';     
+  '';
+
+  #run(`fc-match`)
   runScript="julia";
   # TODO:
   # * Add Revise and Documenter and Plots and and PyPlot and PyCall here

@@ -74,6 +74,7 @@
     #lxqt.lxqt-sudo
     rxvt_unicode-with-plugins
     gtk4
+    bat
 
     # email
     # protonmail-bridge
@@ -117,6 +118,7 @@
     killall
     xorg.xkill
     ranger
+    direnv
 
     #
     restic
@@ -127,10 +129,18 @@
     tikzit
     poppler_utils
     gpicview
-
+    #
+    bat
+    diff-so-fancy
+    fzf # fuzzy search
+    fx # json viewer
+    ripgrep # recursive grep
+    
     # extra
     texlive.combined.scheme-full
     postgresql
+
+    steam
 
   ];
 
@@ -157,15 +167,16 @@
     '';
     promptInit = "";
   };
-										
 
-
+  # Steam
+  programs.steam.enable = true;
 
   # List services that you want to enable:
 
   # Enable locate
   services.locate.enable = true;
-
+  services.locate.pruneNames = []; # to supress warning "findutils locate does not support pruning by directory component"
+  
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
