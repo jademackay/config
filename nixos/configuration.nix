@@ -63,6 +63,7 @@
   # nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     # sys
+    unzip
     zlib
     wget
     curl
@@ -75,6 +76,7 @@
     rxvt_unicode-with-plugins
     gtk4
     bat
+    gnome.gnome-system-monitor
 
     # email
     # protonmail-bridge
@@ -94,6 +96,7 @@
     #julia_13
     terraform
     python39Packages.flake8
+    gnome.meld
 
     go
     gnumake
