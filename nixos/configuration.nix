@@ -115,6 +115,7 @@
     xfce.thunar
     blueman
     firefox
+    chromium
     ispell
     volumeicon
     tree
@@ -122,7 +123,8 @@
     xorg.xkill
     ranger
     direnv
-
+    libreoffice
+    
     #
     restic
 
