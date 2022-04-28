@@ -13,7 +13,7 @@ sudo nixos-rebuild dry-build
 
 No sound:
 ```
-$ alsa restore
+$ alsactl restore
 ```
 
 

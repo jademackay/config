@@ -3,21 +3,44 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
-{
+let
+  myemacs =  pkgs.emacs.pkgs.withPackages (epkgs: (with epkgs.melpaStablePackages; [
+    nix-mode
+  ]));
+  overlays = [
+    # If you want to completely override the normal package
+    # (prev: final: import ./pkgs { inherit pkgs; })
+    # If you want to access your package as `local.emacs`
+    #(prev: final: {
+    # I changed to (doesn't make a difference here):
+    (final: prev: {
+      local = import ./pkgs { inherit pkgs; };
+    })
+    # `prev: final:` is my preference over `super: self:`; these are just
+    # names, but I think mine are clearer about what they mean ;)
+    
+    # You can also use `my` instead of `local`, of course, but I dislike
+    # that naming convention with a passion. At best, it should be
+    # `our`.
+  ];
+in {
+  # This will add our overlays to `pkgs`
+  nixpkgs.overlays = overlays;
+  
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      <home-manager/nixos>
     ];
-
+  
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
+  
   networking.hostName = "goldchain"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true; # NetworkManager
-
+  
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -33,29 +56,31 @@
   
   # Set your time zone.
   time.timeZone = "Pacific/Auckland";
-
+  
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
   # should.
   #system.stateVersion = "20.03"; # Did you read the comment?
-  system.stateVersion = "21.05"; # Did you read the comment?
+  # system.stateVersion = "21.05"; # Did you read the comment?
+  system.stateVersion = "21.11"; # Did you read the comment?
   # system.autoUpgrade.enable = true;
   # system.autoUpgrade.allowReboot = true;
   system.autoUpgrade.enable = false;
   system.autoUpgrade.allowReboot = false;
-
+  
   # Propriery software
   nixpkgs.config.allowUnfree = true; 
-
-   nix = {
-       #package = pkgs.nixUnstable;
-       package = pkgs.nixStable;
-       extraOptions = ''
-       #experimental-features = nix-command flakes
+  
+  nix = {
+    #package = pkgs.nixUnstable;
+    #package = pkgs.nixStable;
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+       experimental-features = nix-command flakes
        #autoOptimiseStore = true;  
        '';
-   };
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -77,7 +102,7 @@
     gtk4
     bat
     gnome.gnome-system-monitor
-
+    
     # email
     # protonmail-bridge
     # mutt
@@ -85,7 +110,13 @@
     
     # dev
     vim
-    emacs
+    #emacs
+    # (pkgs.emacs.pkgs.withPackages (epkgs: (with epkgs.melpaStablePackages; [
+    #   nix-mode
+    # ])))
+    # myemacs
+    local.emacs # Or just `emacs` if you used the first overlay
+
     ispell
     git
     tmux
@@ -124,6 +155,7 @@
     ranger
     direnv
     libreoffice
+    spotify
     
     #
     restic
@@ -148,7 +180,7 @@
     steam
 
   ];
-
+  
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.mtr.enable = true;
@@ -241,6 +273,11 @@
     # extraGroups = [ "wheel" "networkmanager" "docker" "audio" ]; # Enable ‘sudo’ for the user.
     extraGroups = [ "wheel" "networkmanager" "docker" "audio" "jackaudio" ]; # Enable ‘sudo’ for the user.
   };
+  # home-manager.users.eve = { pkgs, ... }: {
+  #   home.packages = [ pkgs.atool pkgs.httpie ];
+  #     programs.bash.enable = true;
+  #     };
+  
 
   # Enable bluetooth applet/manager
   services.blueman.enable = true;
@@ -253,6 +290,8 @@
       anonymousPro
       corefonts
       dejavu_fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
       noto-fonts
       freefont_ttf
       google-fonts
@@ -313,9 +352,12 @@
       xrdb "${pkgs.writeText  "xrdb.conf" ''
          URxvt.font:                 xft:Dejavu Sans Mono for Powerline:size=11
          XTerm*faceName:             xft:Dejavu Sans Mono for Powerline:size=11
+         # URxvt.font:                 xft:Dejavu Sans Mono:size=11
+         # XTerm*faceName:             xft:Dejavu Sans Mono:size=11
          XTerm*utf8:                 2
          URxvt.iconFile:             /usr/share/icons/elementary/apps/24/terminal.svg
-         URxvt.letterSpace:          0
+	 URxvt.letterSpace:          0
+	 #URxvt*letterSpace: 3
          URxvt.background:           #121214
          URxvt.foreground:           #FFFFFF
          XTerm*background:           #121212
@@ -365,7 +407,7 @@
          URxvt.colorUL:              #AED210
          URxvt.perl-ext:             default,url-select
          URxvt.keysym.M-u:           perl:url-select:select_next
-         URxvt.url-select.launcher:  /usr/bin/firefox -new-tab
+         URxvt.url-select.launcher:  /usr/bin/env firefox -new-tab
          URxvt.url-select.underline: true
          Xft*dpi:                    96
          Xft*antialias:              true
