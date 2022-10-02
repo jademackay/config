@@ -64,18 +64,16 @@ in {
   #system.stateVersion = "20.03"; # Did you read the comment?
   # system.stateVersion = "21.05"; # Did you read the comment?
   system.stateVersion = "21.11"; # Did you read the comment?
-  # system.autoUpgrade.enable = true;
-  # system.autoUpgrade.allowReboot = true;
-  system.autoUpgrade.enable = false;
-  system.autoUpgrade.allowReboot = false;
+  system.autoUpgrade.enable = true;
+  system.autoUpgrade.allowReboot = true;
+  # system.autoUpgrade.enable = false;
+  #system.autoUpgrade.allowReboot = false;
   
   # Propriery software
   nixpkgs.config.allowUnfree = true; 
   
   nix = {
-    #package = pkgs.nixUnstable;
-    #package = pkgs.nixStable;
-    package = pkgs.nixFlakes;
+    package = (import <nixos-unstable> {}).nix;
     extraOptions = ''
        experimental-features = nix-command flakes
        #autoOptimiseStore = true;  
