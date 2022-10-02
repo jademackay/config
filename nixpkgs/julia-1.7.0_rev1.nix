@@ -1,0 +1,90 @@
+{ pkgs ? import <nixpkgs> {} }:
+let
+	juliatree=pkgs.stdenv.mkDerivation {
+		name = "juliatree";
+		src = pkgs.fetchzip {
+			url="https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.0-linux-x86_64.tar.gz";
+			sha256="14iqglqj61yk41jq9k3blc71kgdzx17ylh4f96mq6dawbwqvxnlc";
+		};
+		buildPhase = ''
+		           	'';
+		installPhase = ''
+		          mkdir -p $out
+					    cp -r $src $out/julia
+					    '';         
+		fixupPhase = ''
+					    '' ;
+  };
+  ourpython=(pkgs.python39.withPackages (ps: [ps.matplotlib ps.jupyter]));
+  ldconfigWrapper = pkgs.stdenv.mkDerivation {
+      name="ldconfig-env";
+      nativeBuildInputs = [ pkgs.makeWrapper ];
+      phases = [ "installPhase" "fixupPhase" ];
+      installPhase = ''
+      makeWrapper ${pkgs.glibc.bin}/bin/ldconfig $out/sbin/ldconfig --add-flags "-C /usr/ld.so.cache"
+    '';
+  };
+  notofonts=pkgs.noto-fonts;
+in
+pkgs.buildFHSUserEnv {
+  name = "julia";
+  targetPkgs = pkgs: (
+		with pkgs;
+		[
+			ldconfigWrapper
+			juliatree
+      qt5.qtbase
+			curl
+      # xorg.libxcb
+			coreutils
+			# SDL2
+			# SDL2_ttf
+			# SDL2_mixer
+			zlib
+			ourpython
+			#netcdf
+			gcc
+			gnumake
+			binutils-unwrapped
+      fontconfig
+      # Mine
+      binutils-unwrapped
+      zlib
+      adoptopenjdk-jre-bin
+      libxml2
+      git
+      docker
+		] 
+	);
+  profile = ''
+    export PATH=${juliatree}/julia/bin:${ldconfigWrapper}/bin:$PATH
+    export PYTHONPATH=${ourpython}/lib/python3.9/site-packages
+    export PYTHON=${ourpython}/bin/python
+    export LIBRARY_PATH=${pkgs.gcc}:$LIBRARY_PATH 
+    export LIBRARY_PATH=${pkgs.zlib}:$LIBRARY_PATH
+    export LD_LIBRARY_PATH=${pkgs.zlib}:$LD_LIBRARY_PATH
+    export PATH=${pkgs.binutils-unwrapped}/bin:$PATH
+  '';
+  extraBuildCommands = ''
+      echo "$out/lib" > $out/usr/ld.so.conf
+      ldconfig -f $out/usr/ld.so.conf -C $out/usr/ld.so.cache
+      mkdir -p $out/usr/local/share/fonts
+      ln -s ${notofonts}/share $out/usr/local/share/fonts/noto-fonts
+#      touch $out/bin/baz
+    '';
+  runScript="julia";
+}
+  
+# using Pkg                      
+# if isfile("Project.toml") && isfile("Manifest.toml")
+#     Pkg.activate(".")
+# end
+
+# # using Revise
+# # # If use different package depots etc:
+# try
+#     using Revise
+# catch e
+#     @warn(e.msg)
+# end
+  
