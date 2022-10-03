@@ -63,7 +63,8 @@ in {
   # should.
   #system.stateVersion = "20.03"; # Did you read the comment?
   # system.stateVersion = "21.05"; # Did you read the comment?
-  system.stateVersion = "21.11"; # Did you read the comment?
+  # system.stateVersion = "21.11"; # Did you read the comment?
+  system.stateVersion = "22.05"; # Did you read the comment?
   system.autoUpgrade.enable = true;
   system.autoUpgrade.allowReboot = true;
   # system.autoUpgrade.enable = false;
@@ -97,6 +98,7 @@ in {
     oh-my-zsh
     #lxqt.lxqt-sudo
     rxvt_unicode-with-plugins
+    alacritty
     gtk4
     bat
     gnome.gnome-system-monitor
